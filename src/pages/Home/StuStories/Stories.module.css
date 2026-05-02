@@ -1,0 +1,42 @@
+.carousel{
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    /* overflow-x: auto; */
+    padding: 20px 0px;
+}
+.carousel::-webkit-scrollbar{
+    display: none;
+}
+
+.brand_cards{
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-around;
+    animation: spin 15s infinite linear;
+}
+
+
+.brand_card{
+    box-shadow: rgba(30, 51, 123, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .32s ease-in-out;
+    width: 500px;
+    height: 250px;
+    overflow: hidden;
+    margin: 0px 20px;
+}
+.brand_card:hover{
+    transform: scale(1.03);
+}
+
+@keyframes spin {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+.carousel:hover .brand_cards {
+    animation-play-state: paused;
+}
