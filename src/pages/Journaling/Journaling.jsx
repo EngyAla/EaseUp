@@ -1,21 +1,84 @@
+/* eslint-disable no-unused-vars */
 import { Box, Button, Divider, Paper, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import api from '../../api/axiosInstance';
 
 const Journaling = () => {
     const [entry, setEntry] = useState('');
-    const [entries, setEntries] = useState([]);
+    const [entries, setEntries] = useState(() => {
+        const saved = localStorage.getItem("journals");
+        return saved ? JSON.parse(saved) : [];
+    });
+    const [loading, setLoading] = useState(false); // لإضافة حالة تحميل
 
-    const handleSave = () => {
-        if (entry.trim() === '') return;
-        
+    const handleSave = async () => {
+    if (entry.trim() === '') return;
+
+    const token = localStorage.getItem('token');
+    setLoading(true);
+
+    try {
+        // ==============================
+        // 1. Sentiment API (FastAPI)
+        // ==============================
+        const sentimentResponse = await fetch("http://127.0.0.1:8002/analyze", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                text: entry
+            })
+        });
+
+        const sentimentData = await sentimentResponse.json();
+
+        console.log("Sentiment:", sentimentData);
+
+        // ==============================
+        // 2. Backend API (C# / your API)
+        // ==============================
+        const response = await api.post(
+            'http://localhost:5296/api/Students/add-mood-journal',
+            {
+                Mood: entry,
+                Sentiment: sentimentData.sentiment,
+                Score: sentimentData.score
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        // ==============================
+        // 3. Update UI
+        // ==============================
         const newEntry = {
-        text: entry,
-        date: new Date().toLocaleString()
+            text: entry,
+            date: new Date().toLocaleString(),
+            sentiment: sentimentData.sentiment,
+            score: sentimentData.score
         };
-        
-        setEntries([newEntry, ...entries]);
+
+        setEntries((prev) => [newEntry, ...prev]);
         setEntry('');
+
+        console.log(response.data.message);
+
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error saving entry");
+    } finally {
+        setLoading(false);
+    }
     };
+
+useEffect(() => {
+    localStorage.setItem("journals", JSON.stringify(entries));
+}, [entries]);
 
     return (
         <Box sx={{ maxWidth: 600, mx: 'auto', mt: 5, p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -46,6 +109,7 @@ const Journaling = () => {
             <Button
             variant="contained"
             onClick={handleSave}
+            disabled={loading}
             sx={{
                 width: '100%',
                 backgroundColor: '#00796b',
@@ -53,7 +117,7 @@ const Journaling = () => {
                 padding: '12px'
             }}
             >
-            Save Entry
+                {loading ? "Analyzing..." : "Save Entry"}
             </Button>
             <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary', textAlign: "center",  width: "100%" }}>
                 Your journal entries are encrypted and private to you.
@@ -71,6 +135,9 @@ const Journaling = () => {
                 <Typography variant="body1" sx={{ mt: 1, wordBreak: "break-word" }}>
                 {item.text}
                 </Typography>
+                <Typography variant="body1" sx={{ color: "#393939", mt: 2, fontWeight: 600}}>
+                    Sentiment: {item.sentiment} ({item.score})
+                </Typography>
             </Paper>
             ))}
         </Box>
@@ -78,4 +145,4 @@ const Journaling = () => {
     );
 };
 
-export default Journaling
+export default Journaling;

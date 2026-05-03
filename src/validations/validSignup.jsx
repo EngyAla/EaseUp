@@ -1,11 +1,13 @@
 import z from "zod";
 
 export const signupSchema = z.object({
-    name: z.string().min(1, { message: "This Field is required" }),
+    firstName: z.string().min(1, { message: "First name is required" }),
+    
+    lastName: z.string().min(1, { message: "Last name is required" }),
 
-    email: z.string().email(),
+    email: z.string().email({ message: "Invalid email address" }),
 
-    currentPassword: z
+    password: z
         .string()
         .min(6, { message: "Password must be at least 6 characters" })
         .max(20, { message: "Password must be less than 21 characters" })
@@ -14,15 +16,13 @@ export const signupSchema = z.object({
 
     confirmPassword: z
         .string()
-        .optional(),
+        .min(1, { message: "Please confirm your password" }),
+
+    address: z.string().min(1, { message: "Address is required" }),
+
+    phoneNumber: z.string().min(10, { message: "Invalid phone number" }),
 })
-.refine((data) => {
-    // لو فيه confirmPassword → لازم يساوي currentPassword
-    if (data.confirmPassword && data.confirmPassword.length > 0) {
-        return data.currentPassword === data.confirmPassword;
-    }
-    return true;
-}, {
+.refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
 });

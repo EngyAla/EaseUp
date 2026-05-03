@@ -3,7 +3,7 @@ import LeftSide from '../../components/AuthLeftSide/LeftSide';
 import { Box, Typography } from '@mui/material';
 import RightSideHeader from '../../components/AuthRightSide/RightSideHeader';
 import SchoolIcon from '@mui/icons-material/School';
-import passwordImage from '../../assets/forgetPassword.png'
+import passwordImage from '../../../public/assets/forgetPassword.png'
 import ForgetPasswordForm from './ForgetPasswordForm';
 
 

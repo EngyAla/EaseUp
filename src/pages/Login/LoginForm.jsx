@@ -9,11 +9,12 @@ import { loginSchema } from '../../validations/validLogin';
 import GoogleIcon from '@mui/icons-material/Google';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import api from '../../api/axiosInstance';
 
 
 const LoginForm = () => {
     const navigate = useNavigate();
-    const { handleSubmit, register, formState: {errors, isSubmitting }, reset, control } = useForm({
+    const { handleSubmit, register, formState: {errors, isSubmitting }, control } = useForm({
         mode: 'onChange',
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -22,12 +23,27 @@ const LoginForm = () => {
             rememberMe: false, // قيمة مبدئية
         },
     });
-    const onSubmit = ({email, password, rememberMe}) =>{
-        const studentLoginData = { email, password, rememberMe };
-        console.log(studentLoginData);
-        reset();
-        navigate("/dashboard")
-    }
+    const onSubmit = async (data) => {
+        try {
+            const response = await api.post('/api/Auth/login', data);
+            
+            console.log("Login Successful:", response.data);
+            
+            localStorage.setItem("token", response.data.token);
+
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Login Failed:", error.response?.data);
+            alert(error.response?.data.message)
+        }
+    };
+
+    // const handleGoogleLogin = () => {
+    //     // هذا سيوجه المستخدم مباشرة لرابط الباك إند الخاص بك
+    //     // الباك إند بدوره سيقوم بعمل Redirect لصفحة Google Login
+    //     window.location.href = "http://localhost:5296/api/Auth/redirect-to-google";
+    // };
+
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{width: "100%", display: "flex", flexDirection: "column", gap: 3}}>

@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import RightSideHeader from '../../components/AuthRightSide/RightSideHeader';
 import LoginForm from './LoginForm';
 import SpaIcon from '@mui/icons-material/Spa';
-import loginImage from '../../assets/loginImage.png'
+import loginImage from '../../../public/assets/loginImage.png'
 
 
 

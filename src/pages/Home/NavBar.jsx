@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import logo from '../../assets/logo3.png'
+import logo from '../../../public/assets/logo3.png'
 import { Link } from 'react-router';
 
 const pages = ['Home', 'Features', 'Process', 'Stories'];

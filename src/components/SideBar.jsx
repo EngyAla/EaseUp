@@ -10,10 +10,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Navigate, useLocation, useNavigate } from "react-router";
+import { Link, Navigate, useLocation, useNavigate } from "react-router";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import logo from '../assets/logo3.png'
+import logo from '../../public/assets/logo3.png'
 import Avatar from "@mui/material/Avatar";
 import { Button, Tooltip } from "@mui/material";
 
@@ -112,7 +112,7 @@ let sideBarSections = [
     {
         "text": "Goals",
         "icon": <TrackChangesIcon />,
-        "path": "/dashboard/adminManagement"
+        "path": "/dashboard/goals"
     },
     {
         "text": "Exercises",
@@ -122,18 +122,18 @@ let sideBarSections = [
     {
         "text": "AI Chat",
         "icon": <SmartToyIcon />,
-        "path": "/dashboard/settings"
+        "path": "/dashboard/chatbot"
     },
-    {
-        "text": "Community",
-        "icon": <GroupsIcon />,
-        "path": "/dashboard/settings"
-    },
-    {
-        "text": "Gemenification",
-        "icon": <EmojiEventsIcon />,
-        "path": "/dashboard/settings"
-    },
+    // {
+    //     "text": "Community",
+    //     "icon": <GroupsIcon />,
+    //     "path": "/dashboard/communitychat"
+    // },
+    // {
+    //     "text": "Gemenification",
+    //     "icon": <EmojiEventsIcon />,
+    //     "path": "/dashboard/settings"
+    // },
 ]
 
 const SideBar = ({open, handleDrawerClose}) => {
@@ -218,11 +218,13 @@ const SideBar = ({open, handleDrawerClose}) => {
                 ))}
             </List>
             {/* <Divider /> */}
-            <Box sx={{ display: open ? "" : "none", bgcolor: "#308CE80D", border: "1px solid #308CE81A", borderRadius: "8px", m: 2, p: 2}}>
-                <Typography variant="h6" sx={{ color: "#334155", fontSize: "17px"}}>Need help?</Typography>
-                <Typography variant="body2" sx={{ color: "#64748B" }}>Speak to a counselor now.</Typography>
-                <Button variant="contained"  sx={{ textAlign: "center", mt: 2, width: "100%"}}>Get Support</Button>
-            </Box>
+                <Box sx={{ display: open ? "" : "none", bgcolor: "#308CE80D", border: "1px solid #308CE81A", borderRadius: "8px", m: 2, p: 2}}>
+                    <Typography variant="h6" sx={{ color: "#334155", fontSize: "17px"}}>Need help?</Typography>
+                    <Typography variant="body2" sx={{ color: "#64748B" }}>Speak to a counselor now.</Typography>
+                    <Link to={'/dashboard/chatbot'}>
+                        <Button variant="contained"  sx={{ textAlign: "center", mt: 2, width: "100%"}}>Get Support</Button>
+                    </Link>
+                </Box>
         </Drawer>
     );
 };

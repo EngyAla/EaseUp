@@ -24,7 +24,7 @@ const StuHeatmap = () => {
 
 return (
         <Box sx={{ display: 'flex', gap: '140px', alignItems: 'center', mt: 5, ml: 10,}}>
-        {/* عمود الأيام على اليسار */}
+
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px', mr: 1 }}>
             {daysLabels.map((day, i) => (
             <Box key={i} sx={{ height: 30, display: 'flex', alignItems: 'center',  }}>
@@ -33,7 +33,6 @@ return (
             ))}
         </Box>
 
-        {/* مصفوفة البيانات */}
         {mockData?.map((week, weekIndex) => (
         <Box key={weekIndex} sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {week.map((dayValue, dayIndex) => (

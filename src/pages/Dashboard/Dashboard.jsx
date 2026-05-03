@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import Cards from '../../components/Cards';
 import StuLineChart from './LineChart';
 import StuHeatmap from './Heatmap';
+import { useSurvey } from '../../Context/SurveyContext';
 // import InputLabel from '@mui/material/InputLabel';
 // import MenuItem from '@mui/material/MenuItem';
 // import FormControl from '@mui/material/FormControl';
@@ -15,10 +16,13 @@ const Dashboard = () => {
     // const handleChange = (event) => {
     //     setAge(event.target.value);
     // };
+    const {
+            finalResult,
+        } = useSurvey();
     const cardsData = [
         {
             mainTitle: "Despresion",
-            result: "Mild",
+            result: finalResult?.depression_score || "Not defined!",
             colors: {
             subTxtColor: "#94A3B8",
             mainNumColor: "#0F172A"
@@ -26,7 +30,7 @@ const Dashboard = () => {
         },
         {
             mainTitle: "Anxiety",
-            result: "Minimal",
+            result: finalResult?.anxiety_score || "Not defined!",
             colors: {
             subTxtColor: "#94A3B8",
             mainNumColor: "#0F172A"
@@ -34,7 +38,7 @@ const Dashboard = () => {
         },
         {
             mainTitle: "Stress",
-            result: "Moderate",
+            result: finalResult?.stress_score || "Not defined!",
             colors: {
             subTxtColor: "#94A3B8",
             mainNumColor: "#0F172A"

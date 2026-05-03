@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Chip from "@mui/material/Chip";
-import { useLocation, useParams } from "react-router";
+import { useLocation } from "react-router";
 
 
 const drawerWidth = 240;
@@ -71,7 +71,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const TopBar = ({ open, handleDrawerOpen }) => {
-    const { studentID } = useParams();
     // console.log(studentID)
     const titles = [
         {
@@ -79,24 +78,32 @@ const TopBar = ({ open, handleDrawerOpen }) => {
             "title": "Dashboard overview"
         },
         {
-            "path": "/dashboard/usersList",
-            "title": "Users Monitoring List"
+            "path": "/dashboard/journaling",
+            "title": "Mood Journal"
         },
         {
-            "path": "/dashboard/crisisLogs",
-            "title": "Crisis Logs"
+            "path": "/dashboard/survey",
+            "title": "Surveys"
         },
         {
-            "path": "/dashboard/adminManagement",
-            "title": "Admin Management"
+            "path": "/dashboard/goals",
+            "title": "Goals"
         },
         {
-            "path": "/dashboard/settings",
-            "title": "Profile Information"
+            "path": "/dashboard/exercises",
+            "title": "Exercises"
         },
         {
-            "path": `/dashboard/studentProfile/${studentID}`,
-            "title": "Student Profile Information"
+            "path": `/dashboard/chatbot`,
+            "title": "AI Chat"
+        },
+        {
+            "path": `/dashboard/chatbot`,
+            "title": "AI Chat"
+        },
+        {
+            "path": `/dashboard/communitychat`,
+            "title": "Community Chat"
         },
     ];
     const location = useLocation();

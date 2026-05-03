@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import heroImage from '../../assets/hero.png';
+import heroImage from '../../../public/assets/hero.png';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 

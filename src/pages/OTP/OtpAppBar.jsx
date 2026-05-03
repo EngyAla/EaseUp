@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import logo from '../../assets/logo3.png';
+import logo from '../../../public/assets/logo3.png';
 import ShieldIcon from '@mui/icons-material/Shield';
 
 
